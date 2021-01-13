@@ -1,23 +1,20 @@
 require 'pry'
 class CashRegister
-
-    attr_accessor :total, :discount
-    attr_reader :items
+    
     def initialize(discount=nil)
         @total = 0
         @discount=discount
         @items = []
     end
 
-    def add_item (title, price, quantity =1)
+    attr_accessor :total, :discount
+    attr_reader :items
+
+    def add_item (item, price, quantity =1)
         @total += price*quantity
         @price = price
         @quantity=quantity
-        i=0
-        while i < quantity
-            @items << title
-            i+=1
-        end
+        quantity.times {@items << item}
     end
 
     def apply_discount
@@ -30,11 +27,9 @@ class CashRegister
     end
     
     def void_last_transaction
-        i=0
-        while i < @quantity
+        @quantity.times do
             @total -=@price
             @items.pop()
-            i+=1
         end
     end
 
